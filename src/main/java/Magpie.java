@@ -36,35 +36,40 @@ public class Magpie
         {
             response = "Say something, please.";
         }
-        else if (statement.indexOf("dog") >= 0
-                || statement.indexOf("cat") >= 0)
+        else if (findWord(statement, "dog") >= 0
+                || findWord(statement, "cat") >= 0)
         {
             response = "Tell me more about your pets.";
         }
-        else if (statement.indexOf("basketball") >= 0
-                || statement.indexOf("soccer") >= 0
-                || statement.indexOf("football") >= 0
-                || statement.indexOf("baseball") >= 0)
+        else if (findWord(statement, "basketball") >= 0
+                || findWord(statement, "soccer") >= 0
+                || findWord(statement, "football") >= 0
+                || findWord(statement, "baseball") >= 0)
         {
             response = "Tell me more about sports.";
         }
-        else if (statement.indexOf("Mr. Finkelstein") >= 0)
+        else if (findWord(statement, "Mr. Finkelstein") >= 0)
         {
             response = "He sounds like a good teacher.";
         }
-        else if (statement.indexOf("mother") >= 0
-                || statement.indexOf("father") >= 0
-                || statement.indexOf("sister") >= 0
-                || statement.indexOf("brother") >= 0)
+        else if (findWord(statement, "mother") >= 0
+                || findWord(statement, "father") >= 0
+                || findWord(statement, "sister") >= 0
+                || findWord(statement, "brother") >= 0)
         {
             response = "Tell me more about your family.";
         }
-        else if (statement.indexOf("no") >= 0)
+        else if (findWord(statement, "no") >= 0)
         {
             response = "Why so negative?";
         }
-        else if (statement.indexOf("interesting") >= 0
-                || statement.indexOf("fun") >= 0)
+        else if (findWord(statement, "sad") >= 0
+                || findWord(statement, "boring") >= 0)
+        {
+            response = "Don't be so negative. Come on!";
+        }
+        else if (findWord(statement, "interesting") >= 0
+                || findWord(statement, "fun") >= 0)
         {
             response = "Sounds cool! Tell me more.";
         }
@@ -124,9 +129,30 @@ public class Magpie
     // The method returns the index of the first character in word
     // if it is found, and returns -1 otherwise. 
     public int findWord(String str, String word) {
+        int len = str.length();
         String lstr = str.toLowerCase();
         String lword = word.toLowerCase();
-        int finder = lstr.indexOf(lword);
+        String addedwd;
+        int finder;
+        if (lstr.indexOf(lword) == 0) {
+            addedwd = lword + " ";
+            finder = lstr.indexOf(addedwd);
+        } else if (lstr.indexOf(lword) == (len - lword.length())) {
+            addedwd = " " + lword;
+            finder = lstr.indexOf(addedwd);
+            if (finder != -1) {
+                finder++;
+            }
+        } else if (lword.length() == len) {
+            addedwd = lword;
+            finder = lstr.indexOf(addedwd);
+        } else {
+            addedwd = " " + lword + " ";
+            finder = lstr.indexOf(addedwd);
+            if (finder != -1) {
+                finder++;
+            }
+        }
         return finder;
     }
 
