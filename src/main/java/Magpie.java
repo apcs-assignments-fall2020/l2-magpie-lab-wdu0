@@ -32,7 +32,22 @@ public class Magpie
     {
         String response = "";
         String trimsm = statement.trim();
-        if (trimsm.length() <= 0)
+        if (statement.indexOf("I want ") >= 0) {
+            return transformIWantStatement(statement);
+        }
+        else if (statement.indexOf("I ") >= 0 && statement.indexOf(" you") >= 0) {
+            return transformIYouStatement(statement);
+        }
+        else if (statement.indexOf("I want to ") >= 0) {
+            return transformIWantToStatement(statement);
+        }
+        else if (statement.indexOf("you ") >= 0 && statement.indexOf(" me") >= 0) {
+            return transformYouMeStatement(statement);
+        }
+        
+        else {
+
+            if (trimsm.length() <= 0)
         {
             response = "Say something, please.";
         }
@@ -78,6 +93,7 @@ public class Magpie
             response = getRandomResponse();
         }
         return response;
+        }
     }
     
     /**
@@ -167,8 +183,14 @@ public class Magpie
      */
     public String transformIWantStatement(String statement)
     {
-        //your code here
-        return "";
+        String check = "I want ";
+        int startwd = statement.indexOf(check) + 7;
+        String sth = "";
+        for (int i = startwd; i < statement.length(); i++) {
+            sth += statement.charAt(i);
+        }
+        String sentence = "Would you really be happy if you had " + sth + "?";
+        return sentence;
     }
 
     /**
@@ -179,8 +201,16 @@ public class Magpie
      */
     public String transformIYouStatement(String statement)
     {
-        //your code here
-        return "";
+        String checki = "I ";
+        String checku = " you";
+        int startwd = statement.indexOf(checki) + 2;
+        int endwd = statement.indexOf(checku) - 1;
+        String sth = "";
+        for (int i = startwd; i < endwd + 1; i++) {
+            sth += statement.charAt(i);
+        }
+        String sentence = "Why do you " + sth + " me?";
+        return sentence;
     }
 
     /**
@@ -191,8 +221,14 @@ public class Magpie
      */
     public String transformIWantToStatement(String statement)
     {
-        // your code here
-        return "";
+        String check = "I want to ";
+        int startwd = statement.indexOf(check) + 10;
+        String sth = "";
+        for (int i = startwd; i < statement.length(); i++) {
+            sth += statement.charAt(i);
+        }
+        String sentence = "What would it mean to " + sth + "?";
+        return sentence;
     }
 
 
@@ -206,8 +242,16 @@ public class Magpie
      */
     public String transformYouMeStatement(String statement)
     {
-        // your code here
-        return "";
+        String checku = "you ";
+        String checkme = " me";
+        int startwd = statement.indexOf(checku) + 4;
+        int endwd = statement.indexOf(checkme) - 1;
+        String sth = "";
+        for (int i = startwd; i < endwd + 1; i++) {
+            sth += statement.charAt(i);
+        }
+        String sentence = "What makes you think that I " + sth + " you?";
+        return sentence;
     }
 }
 
